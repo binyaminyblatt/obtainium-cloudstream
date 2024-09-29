@@ -2,7 +2,7 @@
 	"workflow": {
 		"owner": "recloudstream",
 		"repo": "cloudstream",
-		"name": "prerelease.yml",
+		"name": "pull_request.yml",
 		"branch": "master"
 	},
 	"delay": 10
