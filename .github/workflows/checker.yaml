@@ -38,7 +38,28 @@ jobs:
               uses: hkusu/apk-info-action@v1
               with:
                   apk-path: ${{ env.apk-path }}
-
+            - name: Show apk info
+              run: |
+                echo '${{ steps.apk-info.outputs.application-name }}'
+                echo '${{ steps.apk-info.outputs.application-id }}'
+                echo '${{ steps.apk-info.outputs.version-code }}'
+                echo '${{ steps.apk-info.outputs.version-name }}'
+                echo '${{ steps.apk-info.outputs.min-sdk-version }}'
+                echo '${{ steps.apk-info.outputs.target-sdk-version }}'
+                echo '${{ steps.apk-info.outputs.compile-sdk-version }}'
+                echo '${{ steps.apk-info.outputs.uses-permissions }}'
+                echo '${{ steps.apk-info.outputs.debuggable }}'
+                echo '${{ steps.apk-info.outputs.allow-backup }}'
+                echo '${{ steps.apk-info.outputs.supports-rtl }}'
+                echo '${{ steps.apk-info.outputs.file-size }}'
+                echo '${{ steps.apk-info.outputs.readable-file-size }}'
+            - name: Generate release tag
+              id: generate_release_tag
+              uses: amitsingh-007/next-release-tag@v6.0.0
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  tag_prefix: 'nightly-${{ steps.apk-info.outputs.version-code }}-'
+                  tag_template: 'yyyy.mm.dd.i'
             - name: Commit Changes
               run: |
                   git config --global user.email "apk-artifacts-downloader@github.com"
@@ -82,7 +103,7 @@ jobs:
               if: ${{ env.status == 'success' }}
               with:
                   files: ./archive/*.apk
-                  tag_name: ${{ steps.apk-info.outputs.version-name }}
+                  tag_name: ${{ steps.generate_release_tag.outputs.next_release_tag }}
                   name: ${{ env.workflow_name }}
                   body_path: ./data/commit-log.txt
 
