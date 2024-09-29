@@ -1,9 +1,9 @@
 {
 	"workflow": {
-		"owner": "rebelonion",
-		"repo": "Dantotsu",
-		"name": "beta.yml",
-		"branch": "dev"
+		"owner": "recloudstream",
+		"repo": "cloudstream",
+		"name": "prerelease.yml",
+		"branch": "master"
 	},
 	"delay": 10
 }
